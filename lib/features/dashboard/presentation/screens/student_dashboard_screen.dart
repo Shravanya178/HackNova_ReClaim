@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/services/notification_service.dart';
+import '../../../../core/widgets/app_drawer.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   const StudentDashboardScreen({super.key});
@@ -13,9 +15,23 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   int _currentIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _setupNotifications();
+  }
+
+  void _setupNotifications() {
+    // Subscribe to student-relevant topics
+    NotificationService().subscribeToTopic('material_matches');
+    NotificationService().subscribeToTopic('vesit_campus');
+    NotificationService().subscribeToTopic('student_updates');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
+      drawer: const AppDrawer(currentRoute: '/student-dashboard'),
       appBar: AppBar(
         title: const Text('ReClaim'),
         centerTitle: false,
@@ -24,10 +40,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Badge(
-              smallSize: 8,
-              child: const Icon(Icons.notifications_outlined, color: Colors.white),
-            ),
+            icon: Badge(smallSize: 8, child: const Icon(Icons.notifications_outlined, color: Colors.white)),
             onPressed: () => context.push('/notifications'),
           ),
           IconButton(
@@ -35,84 +48,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
             onPressed: () => context.push('/settings'),
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.primary.withOpacity(0.8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                    radius: 30.r,
-                    backgroundColor: Colors.white.withOpacity(0.2),
-                    child: Text('SA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.sp)),
-                  ),
-                  SizedBox(height: 12.h),
-                  Text('Shravanya A', style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                  Text('Information Technology • VESIT', style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12.sp)),
-                ],
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home_outlined),
-              title: const Text('Home'),
-              selected: true,
-              onTap: () => Navigator.pop(context),
-            ),
-            ListTile(
-              leading: const Icon(Icons.map_outlined),
-              title: const Text('Discover Materials'),
-              onTap: () { Navigator.pop(context); context.push('/student-dashboard/discovery'); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.list_alt_outlined),
-              title: const Text('My Requests'),
-              onTap: () { Navigator.pop(context); context.push('/requests'); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.swap_horiz_outlined),
-              title: const Text('Barter Exchange'),
-              onTap: () { Navigator.pop(context); context.push('/barter'); },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.analytics_outlined),
-              title: const Text('My Impact'),
-              onTap: () { Navigator.pop(context); context.push('/impact'); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person_outlined),
-              title: const Text('Profile'),
-              onTap: () { Navigator.pop(context); context.push('/profile'); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings_outlined),
-              title: const Text('Settings'),
-              onTap: () { Navigator.pop(context); context.push('/settings'); },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.science_outlined, color: Colors.green.shade700),
-              title: Text('Switch to Lab Mode', style: TextStyle(color: Colors.green.shade700, fontWeight: FontWeight.w600)),
-              onTap: () { Navigator.pop(context); context.go('/lab-dashboard'); },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout_outlined),
-              title: const Text('Change Role'),
-              onTap: () { Navigator.pop(context); context.go('/role-selection'); },
-            ),
-          ],
-        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -231,24 +166,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() => _currentIndex = index);
-          switch (index) {
-            case 0: break;
-            case 1: context.push('/student-dashboard/discovery'); break;
-            case 2: context.push('/requests'); break;
-            case 3: context.push('/profile'); break;
-          }
-        },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.map_outlined), selectedIcon: Icon(Icons.map), label: 'Discover'),
-          NavigationDestination(icon: Icon(Icons.list_alt_outlined), selectedIcon: Icon(Icons.list_alt), label: 'Requests'),
-          NavigationDestination(icon: Icon(Icons.person_outlined), selectedIcon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+      // Removed bottomNavigationBar as per request; only hamburger menu (AppDrawer) remains
     );
   }
 

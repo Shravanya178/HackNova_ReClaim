@@ -1,5 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+import 'notification_service.dart';
 
 class SupabaseService {
   static final SupabaseService _instance = SupabaseService._internal();
@@ -7,6 +10,7 @@ class SupabaseService {
   SupabaseService._internal();
 
   SupabaseClient get client => Supabase.instance.client;
+  final NotificationService _notificationService = NotificationService();
 
   // ================= MATERIALS =================
   
@@ -269,10 +273,11 @@ class SupabaseService {
   /// Upload image to Supabase Storage
   Future<String?> uploadMaterialImage(String filePath, String fileName) async {
     try {
-      final file = await client.storage
+      final bytes = await _getFileBytes(filePath);
+      await client.storage
           .from('materials')
-          .upload('images/$fileName', 
-            await _getFileBytes(filePath),
+          .uploadBinary('images/$fileName', 
+            bytes,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
           );
       
@@ -284,10 +289,10 @@ class SupabaseService {
     }
   }
 
-  Future<List<int>> _getFileBytes(String filePath) async {
-    final file = await Future.value(filePath);
-    // In a real implementation, read file bytes here
-    return [];
+  Future<Uint8List> _getFileBytes(String filePath) async {
+    // Read file bytes from the file path
+    final file = File(filePath);
+    return await file.readAsBytes();
   }
 
   // ================= AUTHENTICATION =================
@@ -324,4 +329,34 @@ class SupabaseService {
 
   /// Listen to auth state changes
   Stream<AuthState> get authStateChanges => client.auth.onAuthStateChange;
+
+  // ================= NOTIFICATIONS =================
+  
+  /// Save FCM token for user
+  Future<void> saveUserFCMToken(String token, {String? userId}) async {
+    final currentUser = client.auth.currentUser;
+    if (currentUser != null) {
+      await client.from('profiles').upsert({
+        'id': userId ?? currentUser.id,
+        'fcm_token': token,
+        'updated_at': DateTime.now().toIso8601String(),
+      });
+    }
+  }
+
+  /// Send notification when new material matches request
+  Future<void> notifyMaterialMatch(String requestId, String materialName) async {
+    await _notificationService.showNotification(
+      "Material Match Found!",
+      "$materialName is now available for your request"
+    );
+  }
+
+  /// Send notification for new requests to lab
+  Future<void> notifyNewRequest(String materialName, String requesterName) async {
+    await _notificationService.showNotification(
+      "New Material Request",
+      "$requesterName requested $materialName"
+    );
+  }
 }
