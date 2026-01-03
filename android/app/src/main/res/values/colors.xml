@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Notification icon color - matches your app's primary color -->
-    <color name="notification_color">#4CAF50</color>
-</resources>
