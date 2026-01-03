@@ -129,13 +129,16 @@ class _OpportunitiesDashboardScreenState extends State<OpportunitiesDashboardScr
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(children: [Icon(Icons.eco, color: Colors.green, size: 16.sp), SizedBox(width: 4.w), Text('${opportunity.carbonImpact} kg CO₂', style: TextStyle(color: Colors.green.shade700, fontSize: 12.sp, fontWeight: FontWeight.bold))]),
-                    SizedBox(height: 4.h),
-                    Text('potential savings', style: TextStyle(color: Colors.grey.shade500, fontSize: 10.sp)),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [Icon(Icons.eco, color: Colors.green, size: 14.sp), SizedBox(width: 2.w), Flexible(child: Text('${opportunity.carbonImpact} kg', style: TextStyle(color: Colors.green.shade700, fontSize: 11.sp, fontWeight: FontWeight.bold)))]),
+                      Text('CO₂ savings', style: TextStyle(color: Colors.grey.shade500, fontSize: 9.sp)),
+                    ],
+                  ),
                 ),
               ],
             ),

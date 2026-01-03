@@ -75,58 +75,62 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 itemCount: _pages.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Placeholder for image
-                        Container(
-                          width: 280.w,
-                          height: 280.h,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(20.r),
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 20.h),
+                          // Placeholder for image
+                          Container(
+                            width: 240.w,
+                            height: 240.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Icon(
+                              Icons.eco_outlined,
+                              size: 100.sp,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.eco_outlined,
-                            size: 120.sp,
-                            color: Theme.of(context).colorScheme.primary,
+                          
+                          SizedBox(height: 24.h),
+                          
+                          Text(
+                            _pages[index].title,
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        
-                        SizedBox(height: 40.h),
-                        
-                        Text(
-                          _pages[index].title,
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
+                          
+                          SizedBox(height: 8.h),
+                          
+                          Text(
+                            _pages[index].subtitle,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        
-                        SizedBox(height: 8.h),
-                        
-                        Text(
-                          _pages[index].subtitle,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
+                          
+                          SizedBox(height: 12.h),
+                          
+                          Text(
+                            _pages[index].description,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Colors.grey.shade600,
+                              height: 1.4,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        
-                        SizedBox(height: 16.h),
-                        
-                        Text(
-                          _pages[index].description,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Colors.grey.shade600,
-                            height: 1.5,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                          SizedBox(height: 20.h),
+                        ],
+                      ),
                     ),
                   );
                 },

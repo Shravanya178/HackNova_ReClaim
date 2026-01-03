@@ -19,22 +19,100 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       appBar: AppBar(
         title: const Text('ReClaim'),
         centerTitle: false,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        foregroundColor: Colors.grey.shade800,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
             icon: Badge(
               smallSize: 8,
-              child: const Icon(Icons.notifications_outlined),
+              child: const Icon(Icons.notifications_outlined, color: Colors.white),
             ),
             onPressed: () => context.push('/notifications'),
           ),
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
+            icon: const Icon(Icons.settings_outlined, color: Colors.white),
             onPressed: () => context.push('/settings'),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.primary.withOpacity(0.8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                    child: Text('SA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.sp)),
+                  ),
+                  SizedBox(height: 12.h),
+                  Text('Shravanya A', style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  Text('Information Technology • VESIT', style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12.sp)),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home_outlined),
+              title: const Text('Home'),
+              selected: true,
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.map_outlined),
+              title: const Text('Discover Materials'),
+              onTap: () { Navigator.pop(context); context.push('/student-dashboard/discovery'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.list_alt_outlined),
+              title: const Text('My Requests'),
+              onTap: () { Navigator.pop(context); context.push('/requests'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.swap_horiz_outlined),
+              title: const Text('Barter Exchange'),
+              onTap: () { Navigator.pop(context); context.push('/barter'); },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.analytics_outlined),
+              title: const Text('My Impact'),
+              onTap: () { Navigator.pop(context); context.push('/impact'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_outlined),
+              title: const Text('Profile'),
+              onTap: () { Navigator.pop(context); context.push('/profile'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings_outlined),
+              title: const Text('Settings'),
+              onTap: () { Navigator.pop(context); context.push('/settings'); },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.science_outlined, color: Colors.green.shade700),
+              title: Text('Switch to Lab Mode', style: TextStyle(color: Colors.green.shade700, fontWeight: FontWeight.w600)),
+              onTap: () { Navigator.pop(context); context.go('/lab-dashboard'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Change Role'),
+              onTap: () { Navigator.pop(context); context.go('/role-selection'); },
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

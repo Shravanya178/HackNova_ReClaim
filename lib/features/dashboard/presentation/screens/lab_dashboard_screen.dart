@@ -14,11 +14,92 @@ class LabDashboardScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(icon: const Icon(Icons.menu, color: Colors.white), onPressed: () {}),
         actions: [
           IconButton(icon: const Icon(Icons.notifications_outlined, color: Colors.white), onPressed: () => context.push('/notifications')),
           IconButton(icon: const Icon(Icons.settings_outlined, color: Colors.white), onPressed: () => context.push('/settings')),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.primary.withOpacity(0.8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                    child: Icon(Icons.science, color: Colors.white, size: 30.sp),
+                  ),
+                  SizedBox(height: 12.h),
+                  Text('Lab A - Chemistry', style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  Text('VESIT Mumbai', style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14.sp)),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard_outlined),
+              title: const Text('Dashboard'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Capture Materials'),
+              onTap: () { Navigator.pop(context); context.push('/lab-dashboard/capture'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.inventory_2_outlined),
+              title: const Text('Inventory'),
+              onTap: () { Navigator.pop(context); context.push('/lab-dashboard/inventory'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.auto_awesome_outlined),
+              title: const Text('Opportunities'),
+              onTap: () { Navigator.pop(context); context.push('/lab-dashboard/opportunities'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.inbox_outlined),
+              title: const Text('Requests'),
+              onTap: () { Navigator.pop(context); context.push('/requests'); },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.timeline_outlined),
+              title: const Text('Lifecycle Tracking'),
+              onTap: () { Navigator.pop(context); context.push('/lifecycle'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.assessment_outlined),
+              title: const Text('Lab Reports'),
+              onTap: () { Navigator.pop(context); context.push('/impact'); },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings_outlined),
+              title: const Text('Settings'),
+              onTap: () { Navigator.pop(context); context.push('/settings'); },
+            ),
+            ListTile(
+              leading: Icon(Icons.person_outline, color: Colors.blue.shade700),
+              title: Text('Switch to Student Mode', style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w600)),
+              onTap: () { Navigator.pop(context); context.go('/student-dashboard'); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Change Role'),
+              onTap: () { Navigator.pop(context); context.go('/role-selection'); },
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -96,8 +177,11 @@ class LabDashboardScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Pending Opportunities', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey.shade800)),
-                  TextButton(onPressed: () => context.push('/lab-dashboard/opportunities'), child: const Text('View All')),
+                  Expanded(
+                    child: Text('Pending Opportunities', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey.shade800), overflow: TextOverflow.ellipsis),
+                  ),
+                  SizedBox(width: 8.w),
+                  TextButton(onPressed: () => context.push('/lab-dashboard/opportunities'), child: Text('View All', style: TextStyle(fontSize: 12.sp))),
                 ],
               ),
               SizedBox(height: 8.h),
@@ -107,14 +191,14 @@ class LabDashboardScreen extends StatelessWidget {
               
               SizedBox(height: 24.h),
               
-              // Additional Features
+              // Lab Management
               Row(
                 children: [
-                  Expanded(child: _buildFeatureCard(context, 'Lifecycle', 'Track materials', Icons.timeline, () => context.push('/lifecycle'))),
+                  Expanded(child: _buildFeatureCard(context, 'Lifecycle', 'Track usage', Icons.timeline, () => context.push('/lifecycle'))),
                   SizedBox(width: 8.w),
-                  Expanded(child: _buildFeatureCard(context, 'Barter', 'Skill exchange', Icons.swap_horiz, () => context.push('/barter'))),
+                  Expanded(child: _buildFeatureCard(context, 'Reports', 'Lab analytics', Icons.assessment, () => context.push('/impact'))),
                   SizedBox(width: 8.w),
-                  Expanded(child: _buildFeatureCard(context, 'Impact', 'Dashboard', Icons.analytics, () => context.push('/impact'))),
+                  Expanded(child: _buildFeatureCard(context, 'Approve', 'Pending', Icons.check_circle_outline, () => context.push('/requests'))),
                 ],
               ),
               
@@ -173,30 +257,31 @@ class LabDashboardScreen extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44.w, height: 44.h,
+            width: 40.w, height: 40.h,
             decoration: BoxDecoration(color: Colors.purple.shade50, borderRadius: BorderRadius.circular(10.r)),
-            child: Icon(Icons.auto_awesome, color: Colors.purple, size: 22.sp),
+            child: Icon(Icons.auto_awesome, color: Colors.purple, size: 20.sp),
           ),
-          SizedBox(width: 12.w),
+          SizedBox(width: 10.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(material, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold, color: Colors.grey.shade800)),
-                Text('$project • $student', style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade600)),
+                Text(material, style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold, color: Colors.grey.shade800), overflow: TextOverflow.ellipsis),
+                Text('$project', style: TextStyle(fontSize: 10.sp, color: Colors.grey.shade600), overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
+          SizedBox(width: 8.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer, borderRadius: BorderRadius.circular(12.r)),
-                child: Text('$matchPercent%', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 11.sp, fontWeight: FontWeight.bold)),
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer, borderRadius: BorderRadius.circular(10.r)),
+                child: Text('$matchPercent%', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 10.sp, fontWeight: FontWeight.bold)),
               ),
-              SizedBox(height: 4.h),
-              Text('$carbonSaved kg CO₂', style: TextStyle(fontSize: 10.sp, color: Colors.green.shade700)),
+              SizedBox(height: 2.h),
+              Text('$carbonSaved kg', style: TextStyle(fontSize: 9.sp, color: Colors.green.shade700)),
             ],
           ),
         ],

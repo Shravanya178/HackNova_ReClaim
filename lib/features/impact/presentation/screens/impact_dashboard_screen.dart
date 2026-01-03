@@ -35,10 +35,10 @@ class _ImpactDashboardScreenState extends State<ImpactDashboardScreen> {
             initialValue: _selectedPeriod,
             onSelected: (value) => setState(() => _selectedPeriod = value),
             itemBuilder: (context) => ['This Week', 'This Month', 'This Year', 'All Time'].map((p) => PopupMenuItem(value: p, child: Text(p))).toList(),
-            icon: const Icon(Icons.more_vert, color: Colors.white),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [Text(_selectedPeriod, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)), const Icon(Icons.arrow_drop_down, color: Colors.white)],
               ),
             ),
