@@ -28,12 +28,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
+      drawer: _buildDrawer(context),
       appBar: AppBar(
         title: const Text('Admin Dashboard'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => context.pop()),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.white,
@@ -342,6 +342,95 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
           TextField(decoration: InputDecoration(labelText: 'Building', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.r)))),
         ]),
         actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')), ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Add'))],
+      ),
+    );
+  }
+
+  Drawer _buildDrawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(16.w, 48.h, 16.w, 16.h),
+            color: Colors.grey.shade100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 28.r,
+                  backgroundColor: Colors.grey.shade300,
+                  child: Icon(Icons.admin_panel_settings, color: Colors.grey.shade700, size: 28.sp),
+                ),
+                SizedBox(height: 12.h),
+                Text('Admin Panel', style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                Text('VESIT Mumbai', style: TextStyle(color: Colors.grey.shade700, fontSize: 13.sp)),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.dashboard_outlined, color: Colors.grey.shade800),
+            title: Text('Overview', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); setState(() => _tabController.index = 0); },
+          ),
+          ListTile(
+            leading: Icon(Icons.inventory_2_outlined, color: Colors.grey.shade800),
+            title: Text('Materials', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); setState(() => _tabController.index = 1); },
+          ),
+          ListTile(
+            leading: Icon(Icons.location_on_outlined, color: Colors.grey.shade800),
+            title: Text('Campus Zones', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); setState(() => _tabController.index = 2); },
+          ),
+          ListTile(
+            leading: Icon(Icons.people_outlined, color: Colors.grey.shade800),
+            title: Text('Users', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); setState(() => _tabController.index = 3); },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(Icons.assessment_outlined, color: Colors.grey.shade800),
+            title: Text('Impact Reports', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/impact'); },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings_outlined, color: Colors.grey.shade800),
+            title: Text('Settings', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/settings'); },
+          ),
+          const Divider(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () { Navigator.pop(context); context.go('/student-dashboard'); },
+                    icon: Icon(Icons.person, size: 14.sp),
+                    label: Text('Student', style: TextStyle(fontSize: 11.sp)),
+                    style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () { Navigator.pop(context); context.go('/lab-dashboard'); },
+                    icon: Icon(Icons.science, size: 14.sp),
+                    label: Text('Lab', style: TextStyle(fontSize: 11.sp)),
+                    style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout_outlined, color: Colors.grey.shade800),
+            title: Text('Change Role', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.go('/role-selection'); },
+          ),
+        ],
       ),
     );
   }

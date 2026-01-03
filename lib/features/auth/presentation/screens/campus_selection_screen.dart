@@ -197,14 +197,19 @@ class _CampusSelectionScreenState extends State<CampusSelectionScreen> {
                                     children: [
                                       Text(
                                         campus.name,
-                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w600,
+                                          color: Colors.black,
                                         ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       SizedBox(height: 4.h),
                                       Text(
                                         campus.location,
-                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
                                           color: Colors.grey.shade600,
                                         ),
                                       ),

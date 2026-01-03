@@ -20,82 +20,96 @@ class LabDashboardScreen extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
+        backgroundColor: Colors.white,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.primary.withOpacity(0.8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+            Container(
+              padding: EdgeInsets.fromLTRB(16.w, 48.h, 16.w, 16.h),
+              color: Colors.grey.shade100,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CircleAvatar(
-                    radius: 30.r,
-                    backgroundColor: Colors.white.withOpacity(0.2),
-                    child: Icon(Icons.science, color: Colors.white, size: 30.sp),
+                    radius: 28.r,
+                    backgroundColor: Colors.grey.shade300,
+                    child: Icon(Icons.science, color: Colors.grey.shade700, size: 28.sp),
                   ),
                   SizedBox(height: 12.h),
-                  Text('Lab A - Chemistry', style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                  Text('VESIT Mumbai', style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14.sp)),
+                  Text('Lab A - Chemistry', style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  Text('VESIT Mumbai', style: TextStyle(color: Colors.grey.shade700, fontSize: 13.sp)),
                 ],
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.dashboard_outlined),
-              title: const Text('Dashboard'),
+              leading: Icon(Icons.dashboard_outlined, color: Colors.grey.shade800),
+              title: Text('Dashboard', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
-              leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text('Capture Materials'),
+              leading: Icon(Icons.camera_alt_outlined, color: Colors.grey.shade800),
+              title: Text('Capture Materials', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/lab-dashboard/capture'); },
             ),
             ListTile(
-              leading: const Icon(Icons.inventory_2_outlined),
-              title: const Text('Inventory'),
+              leading: Icon(Icons.inventory_2_outlined, color: Colors.grey.shade800),
+              title: Text('Inventory', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/lab-dashboard/inventory'); },
             ),
             ListTile(
-              leading: const Icon(Icons.auto_awesome_outlined),
-              title: const Text('Opportunities'),
+              leading: Icon(Icons.auto_awesome_outlined, color: Colors.grey.shade800),
+              title: Text('Opportunities', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/lab-dashboard/opportunities'); },
             ),
             ListTile(
-              leading: const Icon(Icons.inbox_outlined),
-              title: const Text('Requests'),
+              leading: Icon(Icons.inbox_outlined, color: Colors.grey.shade800),
+              title: Text('Requests', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/requests'); },
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.timeline_outlined),
-              title: const Text('Lifecycle Tracking'),
+              leading: Icon(Icons.timeline_outlined, color: Colors.grey.shade800),
+              title: Text('Lifecycle Tracking', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/lifecycle'); },
             ),
             ListTile(
-              leading: const Icon(Icons.assessment_outlined),
-              title: const Text('Lab Reports'),
+              leading: Icon(Icons.assessment_outlined, color: Colors.grey.shade800),
+              title: Text('Lab Reports', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/impact'); },
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.settings_outlined),
-              title: const Text('Settings'),
+              leading: Icon(Icons.settings_outlined, color: Colors.grey.shade800),
+              title: Text('Settings', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.push('/settings'); },
             ),
-            ListTile(
-              leading: Icon(Icons.person_outline, color: Colors.blue.shade700),
-              title: Text('Switch to Student Mode', style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w600)),
-              onTap: () { Navigator.pop(context); context.go('/student-dashboard'); },
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () { Navigator.pop(context); context.go('/student-dashboard'); },
+                      icon: Icon(Icons.person, size: 14.sp),
+                      label: Text('Student', style: TextStyle(fontSize: 11.sp)),
+                      style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () { Navigator.pop(context); context.go('/admin-dashboard'); },
+                      icon: Icon(Icons.admin_panel_settings, size: 14.sp),
+                      label: Text('Admin', style: TextStyle(fontSize: 11.sp)),
+                      style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                    ),
+                  ),
+                ],
+              ),
             ),
             ListTile(
-              leading: const Icon(Icons.logout_outlined),
-              title: const Text('Change Role'),
+              leading: Icon(Icons.logout_outlined, color: Colors.grey.shade800),
+              title: Text('Change Role', style: TextStyle(color: Colors.grey.shade800)),
               onTap: () { Navigator.pop(context); context.go('/role-selection'); },
             ),
           ],

@@ -69,13 +69,13 @@ class _ImpactDashboardScreenState extends State<ImpactDashboardScreen> {
                     ],
                   ),
                   SizedBox(height: 24.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    spacing: 16.w,
+                    runSpacing: 12.h,
                     children: [
                       _buildHeroStat('CO₂ Saved', '156.8 kg', Icons.cloud_outlined),
-                      Container(width: 1, height: 60.h, color: Colors.white.withOpacity(0.3)),
                       _buildHeroStat('Materials', '89 items', Icons.inventory_2_outlined),
-                      Container(width: 1, height: 60.h, color: Colors.white.withOpacity(0.3)),
                       _buildHeroStat('Projects', '34', Icons.rocket_launch_outlined),
                     ],
                   ),
@@ -224,9 +224,9 @@ class _ImpactDashboardScreenState extends State<ImpactDashboardScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(width: 30.w, height: 120.h * value, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.vertical(top: Radius.circular(4.r)))),
-        SizedBox(height: 8.h),
-        Text(label, style: TextStyle(fontSize: 10.sp, color: Colors.grey.shade600)),
+        Container(width: 24.w, height: 100.h * value, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.vertical(top: Radius.circular(4.r)))),
+        SizedBox(height: 6.h),
+        Text(label, style: TextStyle(fontSize: 9.sp, color: Colors.grey.shade600)),
       ],
     );
   }
@@ -256,8 +256,8 @@ class _ImpactDashboardScreenState extends State<ImpactDashboardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(entry.name, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.grey.shade800)),
-                Text(entry.department, style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade500)),
+                Text(entry.name, style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600, color: Colors.grey.shade800), overflow: TextOverflow.ellipsis, maxLines: 1),
+                Text(entry.department, style: TextStyle(fontSize: 10.sp, color: Colors.grey.shade500), overflow: TextOverflow.ellipsis, maxLines: 1),
               ],
             ),
           ),

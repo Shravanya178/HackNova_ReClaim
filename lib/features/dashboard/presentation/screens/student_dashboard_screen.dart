@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/services/notification_service.dart';
-import '../../../../core/widgets/app_drawer.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   const StudentDashboardScreen({super.key});
@@ -14,24 +12,13 @@ class StudentDashboardScreen extends StatefulWidget {
 class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   int _currentIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _setupNotifications();
-  }
 
-  void _setupNotifications() {
-    // Subscribe to student-relevant topics
-    NotificationService().subscribeToTopic('material_matches');
-    NotificationService().subscribeToTopic('vesit_campus');
-    NotificationService().subscribeToTopic('student_updates');
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-      drawer: const AppDrawer(currentRoute: '/student-dashboard'),
+      drawer: _buildDrawer(context),
       appBar: AppBar(
         title: const Text('ReClaim'),
         centerTitle: false,
@@ -299,5 +286,99 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       case 'plastic': return Icons.local_drink;
       default: return Icons.inventory_2;
     }
+  }
+
+  Drawer _buildDrawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(16.w, 48.h, 16.w, 16.h),
+            color: Colors.grey.shade100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 28.r,
+                  backgroundColor: Colors.grey.shade300,
+                  child: Icon(Icons.person, color: Colors.grey.shade700, size: 28.sp),
+                ),
+                SizedBox(height: 12.h),
+                Text('Shravanya', style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                Text('VESIT • IT Dept', style: TextStyle(color: Colors.grey.shade700, fontSize: 13.sp)),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.dashboard_outlined, color: Colors.grey.shade800),
+            title: Text('Dashboard', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () => Navigator.pop(context),
+          ),
+          ListTile(
+            leading: Icon(Icons.map_outlined, color: Colors.grey.shade800),
+            title: Text('Discover Materials', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/student-dashboard/discovery'); },
+          ),
+          ListTile(
+            leading: Icon(Icons.swap_horiz, color: Colors.grey.shade800),
+            title: Text('Skill Barter', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/barter'); },
+          ),
+          ListTile(
+            leading: Icon(Icons.add_circle_outline, color: Colors.grey.shade800),
+            title: Text('My Requests', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/requests'); },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(Icons.assessment_outlined, color: Colors.grey.shade800),
+            title: Text('Impact Dashboard', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/impact'); },
+          ),
+          ListTile(
+            leading: Icon(Icons.timeline_outlined, color: Colors.grey.shade800),
+            title: Text('Material Lifecycle', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/lifecycle'); },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(Icons.settings_outlined, color: Colors.grey.shade800),
+            title: Text('Settings', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.push('/settings'); },
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () { Navigator.pop(context); context.go('/lab-dashboard'); },
+                    icon: Icon(Icons.science, size: 14.sp),
+                    label: Text('Lab', style: TextStyle(fontSize: 11.sp)),
+                    style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () { Navigator.pop(context); context.go('/admin-dashboard'); },
+                    icon: Icon(Icons.admin_panel_settings, size: 14.sp),
+                    label: Text('Admin', style: TextStyle(fontSize: 11.sp)),
+                    style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 6.h)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout_outlined, color: Colors.grey.shade800),
+            title: Text('Change Role', style: TextStyle(color: Colors.grey.shade800)),
+            onTap: () { Navigator.pop(context); context.go('/role-selection'); },
+          ),
+        ],
+      ),
+    );
   }
 }
