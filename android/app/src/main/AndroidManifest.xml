@@ -59,18 +59,18 @@
         </service>
         
         <!-- Notification channel -->
-        <meta-data
+        <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="reclaim_notifications" />
+            android:value="reclaim_notifications" />-->
         
         <!-- Notification icon -->
-        <meta-data
+        <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notification" />
+            android:resource="@drawable/ic_notification" />-->
         
         <!-- Notification color -->
-        <meta-data
+        <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/notification_color" />
+            android:resource="@color/notification_color" />-->
     </application>
 </manifest>

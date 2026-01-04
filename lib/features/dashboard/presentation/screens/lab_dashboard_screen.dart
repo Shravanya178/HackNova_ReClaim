@@ -76,17 +76,17 @@ class LabDashboardScreen extends StatelessWidget {
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  Expanded(child: _buildActionCard(context, 'Capture Materials', 'AI-powered detection', Icons.camera_alt, Colors.blue, () => context.push('/lab-dashboard/capture'))),
+                  Expanded(child: _buildActionCard(context, 'Vision AI', 'Hybrid intelligence', Icons.visibility, Colors.deepPurple, () => context.push('/lab-dashboard/vision'))),
                   SizedBox(width: 12.w),
-                  Expanded(child: _buildActionCard(context, 'View Inventory', 'Manage materials', Icons.inventory_2, Colors.green, () => context.push('/lab-dashboard/inventory'))),
+                  Expanded(child: _buildActionCard(context, 'Capture', 'Quick scan', Icons.camera_alt, Colors.blue, () => context.push('/lab-dashboard/capture'))),
                 ],
               ),
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  Expanded(child: _buildActionCard(context, 'Opportunities', 'AI-generated matches', Icons.auto_awesome, Colors.purple, () => context.push('/lab-dashboard/opportunities'))),
+                  Expanded(child: _buildActionCard(context, 'Inventory', 'Manage materials', Icons.inventory_2, Colors.green, () => context.push('/lab-dashboard/inventory'))),
                   SizedBox(width: 12.w),
-                  Expanded(child: _buildActionCard(context, 'Requests', 'Student requests', Icons.inbox, Colors.orange, () => context.push('/requests'))),
+                  Expanded(child: _buildActionCard(context, 'Opportunities', 'AI matches', Icons.auto_awesome, Colors.orange, () => context.push('/lab-dashboard/opportunities'))),
                 ],
               ),
               

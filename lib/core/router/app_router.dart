@@ -26,6 +26,7 @@ import 'package:reclaim/features/opportunities/presentation/screens/barter_oppor
 import 'package:reclaim/features/capture/presentation/screens/material_capture_screen.dart';
 import 'package:reclaim/features/inventory/presentation/screens/material_inventory_screen.dart';
 import 'package:reclaim/features/opportunities/presentation/screens/opportunities_dashboard_screen.dart';
+import 'package:reclaim/features/vision/presentation/screens/vision_intelligence_screen.dart';
 
 // Shared screens
 import 'package:reclaim/features/materials/presentation/screens/material_detail_screen.dart';
@@ -127,6 +128,11 @@ GoRouter appRouter(AppRouterRef ref) {
             path: 'opportunities',
             name: 'opportunities-dashboard',
             builder: (context, state) => const OpportunitiesDashboardScreen(),
+          ),
+          GoRoute(
+            path: 'vision',
+            name: 'vision-intelligence',
+            builder: (context, state) => const VisionIntelligenceScreen(),
           ),
         ],
       ),

@@ -240,7 +240,7 @@ class _CampusSelectionScreenState extends State<CampusSelectionScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                Container(
+                      Container(
                         padding: EdgeInsets.all(16.w),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
@@ -287,78 +287,74 @@ class _CampusSelectionScreenState extends State<CampusSelectionScreen> {
                       ),
                       
                       SizedBox(height: 16.h),
-                
-                if (_isLoadingDepartments)
-                  const Center(child: CircularProgressIndicator())
-                else
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _departments.length,
-                      itemBuilder: (context, index) {
-                        final department = _departments[index];
-                        final isSelected = _selectedDepartmentId == department.id;
-                        
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 8.h),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedDepartmentId = department.id;
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(16.w),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(12.r),
-                                border: Border.all(
+                      
+                      if (_isLoadingDepartments)
+                        const Center(child: CircularProgressIndicator())
+                      else
+                        ..._departments.map((department) {
+                          final isSelected = _selectedDepartmentId == department.id;
+                          
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 8.h),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedDepartmentId = department.id;
+                                });
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(16.w),
+                                decoration: BoxDecoration(
                                   color: isSelected
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Colors.grey.shade200,
-                                  width: isSelected ? 2 : 1,
+                                      ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.grey.shade200,
+                                    width: isSelected ? 2 : 1,
+                                  ),
                                 ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      department.name,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                        color: isSelected
-                                            ? Theme.of(context).colorScheme.primary
-                                            : Colors.grey.shade800,
-                                        fontWeight: FontWeight.w500,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        department.name,
+                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          color: isSelected
+                                              ? Theme.of(context).colorScheme.primary
+                                              : Colors.grey.shade800,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  if (isSelected)
-                                    Icon(
-                                      Icons.check,
-                                      color: Theme.of(context).colorScheme.primary,
-                                      size: 20.sp,
-                                    ),
-                                ],
+                                    if (isSelected)
+                                      Icon(
+                                        Icons.check,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        size: 20.sp,
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    
-                    SizedBox(height: 24.h),
-                    
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _selectedDepartmentId != null ? _handleComplete : null,
-                        child: const Text('Complete Setup'),
+                          );
+                        }),
+                      
+                      SizedBox(height: 24.h),
+                      
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: _selectedDepartmentId != null ? _handleComplete : null,
+                          child: const Text('Complete Setup'),
+                        ),
                       ),
-                    ),
-                    
-                    SizedBox(height: 24.h),
-                  ],
+                      
+                      SizedBox(height: 24.h),
+                    ],
+                  ),
                 ),
               ),
           ],
